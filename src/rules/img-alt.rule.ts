@@ -17,13 +17,21 @@ export const ImgAltRule: Rule = {
         imgs.forEach(img => {
             if (!img.hasAttribute('alt')) {
                 const line = calculateLine(file.content, img.range[0], file.templateOffset);
+                
+                const offset = file.templateOffset || 0;
+                const fix = {
+                    range: [img.range[0] + 4 + offset, img.range[0] + 4 + offset] as [number, number],
+                    replacement: ' alt=""'
+                };
+
                 findings.push({
                     rule: this.id,
                     wcag: this.wcag,
                     severity: this.severity,
                     line: line,
                     message: 'Missing alt attribute on <img> tag',
-                    file: file.filePath
+                    file: file.filePath,
+                    fix
                 });
             }
         });

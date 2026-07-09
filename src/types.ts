@@ -7,6 +7,12 @@ export interface Finding {
     line: number;
     message: string;
     file: string;
+    fix?: Fix;
+}
+
+export interface Fix {
+    range: [number, number];
+    replacement: string;
 }
 
 export interface ParsedFile {

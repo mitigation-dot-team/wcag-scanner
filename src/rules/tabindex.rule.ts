@@ -15,16 +15,35 @@ export const TabindexRule: Rule = {
         const findings: Finding[] = [];
 
         elements.forEach(el => {
-            const tabindex = parseInt(el.getAttribute('tabindex') || '0');
+            const rawTabindex = el.getAttribute('tabindex');
+            const tabindex = parseInt(rawTabindex || '0');
             if (tabindex > 0) {
                 const line = calculateLine(file.content, el.range[0], file.templateOffset);
+                
+                // Construct fix: find tabindex="X" or tabindex='X' or tabindex=X
+                const elRaw = el.outerHTML;
+                const tabindexRegex = /tabindex=(['"]?)(\d+)\1/;
+                const match = elRaw.match(tabindexRegex);
+                
+                let fix;
+                if (match) {
+                    const matchStart = match.index!;
+                    const matchEnd = matchStart + match[0].length;
+                    const offset = file.templateOffset || 0;
+                    fix = {
+                        range: [el.range[0] + matchStart + offset, el.range[0] + matchEnd + offset] as [number, number],
+                        replacement: `tabindex="0"`
+                    };
+                }
+
                 findings.push({
                     rule: this.id,
                     wcag: this.wcag,
                     severity: this.severity,
                     line: line,
                     message: `Avoid using positive tabindex (${tabindex}). Use 0 or -1 to maintain natural tab order.`,
-                    file: file.filePath
+                    file: file.filePath,
+                    fix
                 });
             }
         });

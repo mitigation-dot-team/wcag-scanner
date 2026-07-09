@@ -12,6 +12,7 @@ program
     .version('1.0.0')
     .argument('<path>', 'file or glob pattern to scan')
     .option('-j, --json', 'output in JSON format')
+    .option('--fix', 'automatically fix some accessibility issues', false)
     .action(async (path: string, options) => {
         const engine = new Engine();
         ALL_RULES.forEach(rule => engine.registerRule(rule));
@@ -23,7 +24,7 @@ program
                 process.exit(1);
             }
 
-            const findings = await engine.run(files);
+            const findings = await engine.run(files, options.fix);
 
             if (options.json) {
                 Reporter.reportJson(findings);
