@@ -13,7 +13,13 @@ program
     .argument('<path>', 'file or glob pattern to scan')
     .option('-j, --json', 'output in JSON format')
     .option('--fix', 'automatically fix some accessibility issues', false)
+    .option('--api-key <key>', 'Mitigation API Key')
     .action(async (path: string, options) => {
+        if (!options.apiKey) {
+            console.error('Error: Mitigation API Key is required. Get yours at https://mitigation.team');
+            process.exit(1);
+        }
+
         const engine = new Engine();
         ALL_RULES.forEach(rule => engine.registerRule(rule));
 
