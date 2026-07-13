@@ -1,0 +1,37 @@
+name: WCAG Scanner
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  scan:
+    name: Accessibility Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Configure Private Registry
+        run: |
+          npm config set @mitigation-dot-team:registry=https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.MITIGATIONDOTTEAM }}
+        
+      - name: Install local dependencies
+        run: npm install
+
+      - name: Run WCAG Scanner Action
+        uses: ./ # Uses the action defined in the current repo
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Uses the automatic GH token
+          path: "src/**/*.{html,ts}"

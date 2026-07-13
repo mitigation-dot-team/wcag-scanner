@@ -1,0 +1,44 @@
+name: 'WCAG Scanner'
+description: 'Scans Angular files for WCAG 2.2 accessibility issues and posts a comment on the PR with the results.'
+inputs:
+  github-token:
+    description: 'Github token required to post comments on PRs'
+    required: true
+  path:
+    description: 'Folders files to scan (glob pattern)'
+    required: false
+    default: 'src/**/*.{html,ts}'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Scanner
+      run: |
+        npm run scan -- "${{ inputs.path }}" --json > results.json || true
+      shell: bash
+
+    - name: Post Comment on PR
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const fs = require('fs');
+          const results = JSON.parse(fs.readFileSync('results.json', 'utf8'));
+          
+          if (results.length === 0) return;
+
+          let body = '### ♿ WCAG Scanner Report\n\n';
+          body += '| Severity | Rule | File | Line | Message |\n';
+          body += '| --- | --- | --- | --- | --- |\n';
+          
+          results.forEach(f => {
+            const icon = f.severity === 'critical' ? '🔴' : f.severity === 'high' ? '🟠' : '🟡';
+            body += `| ${icon} ${f.severity} | ${f.wcag} | ${f.file} | ${f.line} | ${f.message} |\n`;
+          });
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: body
+          });
