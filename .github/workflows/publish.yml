@@ -1,4 +1,4 @@
-name: Package
+name: Publish package to GitHub Packages
 on:
   push:
     branches:
@@ -6,28 +6,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+      # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-      - name: Configure npm for GitHub Packages
-        run: |
-          npm config set registry https://registry.npmjs.org/
-          npm config set @mitigation-dot-team:registry=https://npm.pkg.github.com/
-          npm config set //npm.pkg.github.com/:_authToken=${{secrets.MITIGATIONDOTTEAM}}
-          npm install
+          node-version: '24.x'
+          registry-url: 'https://npm.pkg.github.com'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@mitigation-dot-team'
       - run: npm ci
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.MITIGATIONDOTTEAM}}
+          NODE_AUTH_TOKEN: ${{ secrets.MITIGATIONDOTTEAM }}
