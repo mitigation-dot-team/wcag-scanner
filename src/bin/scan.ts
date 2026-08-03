@@ -3,6 +3,7 @@ import { glob } from 'glob';
 import { Engine } from '../engine.js';
 import { ALL_RULES } from '../rules/index.js';
 import { Reporter } from '../reporter.js';
+import { validateApiKey } from '../utils/api-key-validator.js';
 
 const program = new Command();
 
@@ -19,6 +20,15 @@ program
             console.error('Error: Mitigation API Key is required. Get yours at https://mitigation.team');
             process.exit(1);
         }
+
+        // Validate the API key
+        const validation = await validateApiKey(options.apiKey);
+        if (!validation.isValid) {
+            console.error(`✗ Error: ${validation.message}`);
+            process.exit(1);
+        }
+
+        console.log(`✓ ${validation.message}`);
 
         const engine = new Engine();
         ALL_RULES.forEach(rule => engine.registerRule(rule));
