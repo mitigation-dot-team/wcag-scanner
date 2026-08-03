@@ -1,6 +1,9 @@
 name: 'WCAG Scanner'
 description: 'Scans Angular files for WCAG 2.2 accessibility issues and posts a comment on the PR with the results.'
 inputs:
+  mitigation-api-key:
+    description: 'API key for WCAG Scanner. Get yours at https://mitigation.team'
+    required: true
   github-token:
     description: 'Github token required to post comments on PRs'
     required: true
@@ -12,6 +15,14 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Validate API Key
+      run: |
+        if [ -z "${{ inputs.mitigation-api-key }}" ]; then
+          echo "::error::Mitigation API Key is required. Get yours at https://mitigation.team"
+          exit 1
+        fi
+      shell: bash
+
     - name: Install dependencies
       run: npm install
       working-directory: ${{ github.action_path }}
