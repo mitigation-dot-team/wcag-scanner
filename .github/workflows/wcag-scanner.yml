@@ -33,6 +33,6 @@ jobs:
       - name: Run WCAG Scanner Action
         uses: ./ # Uses the action defined in the current repo
         with:
-          mergeshield-api-key: ${{ secrets.MITIGATIONDOTTEAM }}
+          mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }} # Uses the automatic GH token
           path: "src/**/*.{html,ts}"
