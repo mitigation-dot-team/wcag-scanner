@@ -88,10 +88,10 @@ Line 14
 
 ## Roadmap
 
-[ ] Slack notification
-[ ] Custom rules
-[ ] PR block
-[ ] Performance improvement
+[ ] Slack notification  
+[ ] Custom rules  
+[ ] PR block  
+[ ] Performance improvement  
 
 
-Powered by [Mitigation dot Team](https://mitigation.team?utm_source=wcag_scanner_repository&utm_medium=comment&utm_campaign=wcag_scanner&utm_ref=github_action)
+Powered by [Mitigation dot Team](https://mitigation.team?utm_source=wcag_scanner_repository&utm_medium=comment&utm_campaign=wcag_scanner&utm_ref=github_action) & [@danielnaranjo](https://github.com/danielnaranjo). 2026
