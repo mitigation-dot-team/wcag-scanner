@@ -36,15 +36,16 @@ export const TabindexRule: Rule = {
                     };
                 }
 
-                findings.push({
+                const finding: Finding = {
                     rule: this.id,
                     wcag: this.wcag,
                     severity: this.severity,
                     line: line,
                     message: `Avoid using positive tabindex (${tabindex}). Use 0 or -1 to maintain natural tab order.`,
-                    file: file.filePath,
-                    fix
-                });
+                    file: file.filePath
+                };
+                if (fix) finding.fix = fix;
+                findings.push(finding);
             }
         });
 

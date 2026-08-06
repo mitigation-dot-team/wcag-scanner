@@ -1,1 +1,11 @@
 node_modules/
+dist/
+test-samples/user.component.*
+tests/duplicate-id.rule.*.*
+tests/form-rules.test.*
+tests/label-for.rule.*.*
+tests/label-title.rule.*.*
+tests/heading-order.rule.*.*
+tests/img-alt.rule.*.*
+tests/new-rules.*.*
+tests/style-rules.test.*

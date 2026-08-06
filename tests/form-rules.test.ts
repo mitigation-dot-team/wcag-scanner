@@ -9,7 +9,7 @@ describe('Form Rules', () => {
         const file = parseHtml('test.html', content);
         const findings = FormErrorMessageRule.execute(file);
         expect(findings.length).toBe(1);
-        expect(findings[0].message).toContain('missing aria-describedby');
+        expect(findings[0]!.message).toContain('missing aria-describedby');
     });
 
     it('should not detect missing error pointers if aria-invalid is false', () => {
@@ -27,7 +27,7 @@ describe('Form Rules', () => {
         const file = parseHtml('test.html', content);
         const findings = RequiredFieldRule.execute(file);
         expect(findings.length).toBe(1);
-        expect(findings[0].message).toContain('missing a visible/accessible indicator');
+        expect(findings[0]!.message).toContain('missing a visible/accessible indicator');
     });
 
     it('should not detect required fields if indicator is present in label', () => {

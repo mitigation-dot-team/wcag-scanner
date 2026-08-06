@@ -8,8 +8,9 @@ export class Reporter {
         }
 
         const groupedByFile = findings.reduce((acc, finding) => {
-            if (!acc[finding.file]) acc[finding.file] = [];
-            acc[finding.file].push(finding);
+            const file = finding.file;
+            const list = acc[file] ?? (acc[file] = []);
+            list.push(finding);
             return acc;
         }, {} as Record<string, Finding[]>);
 
