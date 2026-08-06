@@ -62,6 +62,8 @@ runs:
             body += `| ${icon} ${f.severity} | ${f.wcag} | ${f.file} | ${f.line} | ${f.message} |\n`;
           });
 
+          body += `Powered by [Mitigation dot Team](https://mitigation.team)\n\n`;
+
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
