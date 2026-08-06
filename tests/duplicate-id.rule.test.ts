@@ -8,7 +8,7 @@ describe('DuplicateIdRule', () => {
         const parsed = parseHtml('test.html', html);
         const findings = DuplicateIdRule.execute(parsed);
         expect(findings.length).toBe(2);
-        expect(findings[0].message).toContain('Duplicate ID "test"');
+        expect(findings[0]!.message).toContain('Duplicate ID "test"');
     });
 
     it('should not find issues with unique IDs', () => {

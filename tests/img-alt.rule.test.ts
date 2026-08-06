@@ -8,7 +8,7 @@ describe('ImgAltRule', () => {
         const parsed = parseHtml('test.html', html);
         const findings = ImgAltRule.execute(parsed);
         expect(findings.length).toBe(1);
-        expect(findings[0].rule).toBe('IMG_ALT');
+        expect(findings[0]!.rule).toBe('IMG_ALT');
     });
 
     it('should not find images with alt attribute', () => {

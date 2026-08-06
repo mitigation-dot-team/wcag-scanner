@@ -2,15 +2,15 @@
   "name": "mitigation-wcag",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "scan.js",
   "scripts": {
     "scan": "tsx src/bin/scan.ts",
     "test": "vitest",
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Daniel Naranjo <daniel.naranjo@mitigation.team>",
+  "license": "MIT",
   "dependencies": {
     "commander": "^15.0.0",
     "glob": "^13.0.6",

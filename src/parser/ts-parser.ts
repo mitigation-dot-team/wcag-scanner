@@ -9,6 +9,8 @@ export function parseTs(filePath: string, content: string): ParsedFile[] {
     const components: ParsedFile[] = [];
 
     while ((match = templateRegex.exec(content)) !== null) {
+        // Guard: ensure the captured group exists before using it (TypeScript strict checks)
+        if (!match[1]) continue;
         const templateContent = match[1];
         // We use the full content for line calculation in the engine, 
         // but the rule's execute expects a ParsedFile with an AST.

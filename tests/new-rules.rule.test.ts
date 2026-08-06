@@ -9,7 +9,7 @@ describe('IframeTitleRule', () => {
         const parsed = parseHtml('test.html', html);
         const findings = IframeTitleRule.execute(parsed);
         expect(findings.length).toBe(1);
-        expect(findings[0].message).toContain('iframes must have a non-empty title');
+        expect(findings[0]!.message).toContain('iframes must have a non-empty title');
     });
 
     it('should not find issues with titled iframes', () => {

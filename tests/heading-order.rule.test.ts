@@ -8,7 +8,7 @@ describe('HeadingOrderRule', () => {
         const parsed = parseHtml('test.html', html);
         const findings = HeadingOrderRule.execute(parsed);
         expect(findings.length).toBe(1);
-        expect(findings[0].message).toContain('from <h1> to <h3>');
+        expect(findings[0]!.message).toContain('from <h1> to <h3>');
     });
 
     it('should not find issues with correct order', () => {

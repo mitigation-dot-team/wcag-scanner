@@ -17,7 +17,7 @@ describe('Style-based Rules', () => {
         const file = parseHtml('test.html', content);
         const findings = ColorContrastRule.execute(file);
         expect(findings.length).toBe(1);
-        expect(findings[0].message).toContain('Low contrast ratio');
+        expect(findings[0]!.message).toContain('Low contrast ratio');
     });
 
     it('should not detect high contrast', () => {

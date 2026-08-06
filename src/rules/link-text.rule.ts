@@ -21,7 +21,7 @@ export const LinkTextRule: Rule = {
             
             // Check if it contains an image with alt text (also valid for link name)
             const imgs = link.querySelectorAll('img');
-            const hasImgWithAlt = imgs.some(img => img.getAttribute('alt')?.trim().length > 0);
+            const hasImgWithAlt = imgs.some(img => (img.getAttribute('alt') || '').trim().length > 0);
 
             if (!text && !hasAriaLabel && !hasTitle && !hasImgWithAlt) {
                 const line = calculateLine(file.content, link.range[0], file.templateOffset);

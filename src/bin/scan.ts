@@ -16,8 +16,7 @@ program
     .option('--api-key <key>', 'Mitigation API Key')
     .action(async (path: string, options) => {
         if (!options.apiKey) {
-            console.error('Error: Mitigation API Key is required. Get yours at https://mitigation.team');
-            process.exit(1);
+            console.warn('\x1b[34m Hint: Mitigation API Key will be required in the next releases. Get yours at https://mitigation.team\x1b[0m\n');
         }
 
         const engine = new Engine();
